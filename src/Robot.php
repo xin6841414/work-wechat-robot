@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: xin6841414
  * Date: 10-16 016
- * Time: 15:43
+ * Time: 15:43.
  */
 
 namespace Xin6841414\WorkWechatRobot;
@@ -16,10 +16,8 @@ use Xin6841414\WorkWechatRobot\Messages\Message;
 use Xin6841414\WorkWechatRobot\Messages\News;
 use Xin6841414\WorkWechatRobot\Messages\Text;
 
-
 class Robot
 {
-
     /**
      * @var
      */
@@ -49,7 +47,6 @@ class Robot
         $this->config = $config;
         $this->client = $client;
         $this->with();
-
     }
 
     public function with($robot = 'default')
@@ -62,12 +59,15 @@ class Robot
         }
         $this->robot = $robot;
         $this->workWechatService = new WorkWechatService($this->config[$robot], $this->client);
+
         return $this;
     }
 
     /**
-     * 切换消息类型
+     * 切换消息类型.
+     *
      * @param $message
+     *
      * @throws InvalidArgumentException
      */
     public function setMessage($message)
@@ -78,13 +78,16 @@ class Robot
         $class = __NAMESPACE__.'\\Messages\\'.ucfirst($message);
         if (class_exists($class)) {
             $this->message = new $class($this->config[$this->robot]);
+
             return $this;
         }
+
         throw new InvalidArgumentException('消息类【'.$class.'】不存在');
     }
 
     /**
-     * 获取消息类型
+     * 获取消息类型.
+     *
      * @return Message
      */
     public function getMessage()
@@ -98,13 +101,16 @@ class Robot
     }
 
     /**
-     * 使用<@userid>语法@某人
+     * 使用<@userid>语法@某人.
+     *
      * @param string|array $user
+     *
      * @return $this
      */
     public function contentAt($user)
     {
         $this->message->contentAt($user);
+
         return $this;
     }
 
@@ -120,6 +126,7 @@ class Robot
         }
         $this->message->setContent($content);
         $this->message->combineMessage();
+
         return $this;
     }
 
@@ -130,6 +137,7 @@ class Robot
         }
         $this->message->setContent($content);
         $this->message->combineMessage();
+
         return $this;
     }
 
@@ -141,18 +149,21 @@ class Robot
         $this->message->setBase64($base64);
         $this->message->setMd5($md5);
         $this->message->combineMessage();
+
         return $this;
     }
 
-
     /**
      * 仅添加图文消息不发送
+     *
      * @param $title string 标题
      * @param $url string 图片链接地址， http协议头可带可不带
      * @param string $description 图文简单描述
-     * @param string $picUrl 图片背景url地址
-     * @return $this
+     * @param string $picUrl      图片背景url地址
+     *
      * @throws InvalidArgumentException
+     *
+     * @return $this
      */
     public function addNew($title, $url, $description = '', $picUrl = '')
     {
@@ -160,9 +171,9 @@ class Robot
             $this->message = new News($this->config[$this->robot]);
         }
         $this->message->addArticle($title, $url, $description, $picUrl);
+
         return $this;
     }
-
 
     public function file($mediaId)
     {
@@ -170,13 +181,16 @@ class Robot
             $this->message = new File($this->config[$this->robot]);
         }
         $this->message->setMedia($mediaId);
+
         return $this;
     }
 
     /**
-     * 通过手机号@某人
+     * 通过手机号@某人.
+     *
      * @param string|array $mobile
-     * @param bool $atAll
+     * @param bool         $atAll
+     *
      * @return $this
      */
     public function mentionedAtMobile($mobile = [], $atAll = false)
@@ -191,13 +205,16 @@ class Robot
         }
         $this->message
             ->sendAt(2, $mobile, $atAll);
+
         return $this;
     }
 
     /**
-     * 通过userid@某人
+     * 通过userid@某人.
+     *
      * @param string|array $userId
-     * @param bool $atAll
+     * @param bool         $atAll
+     *
      * @return $this
      */
     public function mentionedAtUserId($userId = [], $atAll = false)
@@ -211,6 +228,7 @@ class Robot
             $userId = array_merge($userIdsConfig, $userId);
         }
         $this->message->sendAt(1, $userId, $atAll);
+
         return $this;
     }
 }
