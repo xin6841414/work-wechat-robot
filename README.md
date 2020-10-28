@@ -1,9 +1,13 @@
-<h1 align="center"> weather </h1>
+<h1 align="center"> 企业微信群机器人 </h1>
 
 <p align="center"> 企业微信群机器人通知的 laravel扩展</p>
 
-[![Build Status](https://travis-ci.org/xin6841414/Weather.svg?branch=master)](https://travis-ci.org/xin6841414/Weather)
-
+[![Build Status](https://travis-ci.org/xin6841414/work-wechat-robot.svg?branch=master)](https://travis-ci.org/xin6841414/work-wechat-robot)
+[![Total Downloads](https://poser.pugx.org/xin6841414/work-wechat-robot/downloads)](https://packagist.org/packages/xin6841414/work-wechat-robot)
+[![License](https://poser.pugx.org/xin684141/work-wechat-robot/license)](//packagist.org/packages/xin6841414/work-wechat-robot)
+[![Latest Stable Version](https://poser.pugx.org/xin6841414/work-wechat-robot/v)](//packagist.org/packages/xin6841414/work-wechat-robot)
+[![Latest Unstable Version](https://poser.pugx.org/xin6841414/work-wechat-robot/v/unstable)](//packagist.org/packages/xin6841414/work-wechat-robot)
+![StyleCI build status](https://github.styleci.io/repos/307912683/shield) 
 
 ## 安装
 
