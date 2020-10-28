@@ -3,18 +3,14 @@
  * Created by PhpStorm.
  * User: xin6841414
  * Date: 10-16 016
- * Time: 16:41
+ * Time: 16:41.
  */
 
 namespace Xin6841414\WorkWechatRobot\Messages;
 
-
-use Xin6841414\WorkWechatRobot\Exceptions\InvalidArgumentException;
-
 abstract class Message
 {
-
-    static $msgTypes = ['text', 'markdown', 'image', 'new'];
+    public static $msgTypes = ['text', 'markdown', 'image', 'new'];
     protected $config;
     protected $msgType;
     protected $content;
@@ -22,7 +18,7 @@ abstract class Message
     protected $mentionedList = false;
     protected $mentionedMobileList = false;
 
-    abstract function getMessageType();
+    abstract public function getMessageType();
 
     public function __construct($config)
     {
@@ -32,16 +28,16 @@ abstract class Message
     public function configNotify($config)
     {
         if ($this->mentionedList !== false) {
-            if (strpos($config['notify_user_ids'], ',') === false){
-                $notifyUsers = [(string)$config['notify_user_ids']];
+            if (strpos($config['notify_user_ids'], ',') === false) {
+                $notifyUsers = [(string) $config['notify_user_ids']];
             } else {
                 $notifyUsers = explode(',', $config['notify_user_ids']);
             }
             $this->mentionedList = $notifyUsers;
         }
         if ($this->mentionedMobileList !== false) {
-            if (strpos($config['notify_mobiles'], ',') === false){
-                $notifyMobiles = [(string)$config['notify_mobiles']];
+            if (strpos($config['notify_mobiles'], ',') === false) {
+                $notifyMobiles = [(string) $config['notify_mobiles']];
             } else {
                 $notifyMobiles = explode(',', $config['notify_mobiles']);
             }
@@ -55,6 +51,7 @@ abstract class Message
     public function getBody()
     {
         $tmp['content'] = $this->content;
+
         return $tmp;
     }
 
@@ -65,7 +62,9 @@ abstract class Message
 
     /**
      * 在content中使用<@userid>扩展语法来@群成员，仅在text/markdown消息类型支持
+     *
      * @param $userId
+     *
      * @return $this
      */
     public function contentAt($userId)
@@ -73,14 +72,15 @@ abstract class Message
         if ($this->canContentAt) {
             $result = '';
             if (is_array($userId)) {
-                foreach($userId as $user) {
-                    $result.='<@'.$user.'>';
+                foreach ($userId as $user) {
+                    $result .= '<@'.$user.'>';
                 }
             } else {
                 $result = '<@'.$userId.'>';
             }
             $this->content = $this->content.$result;
         }
+
         return $this;
     }
 
@@ -101,6 +101,7 @@ abstract class Message
             }
             $this->mentionedMobileList = $result;
         }
+
         return $this;
     }
 
@@ -108,7 +109,7 @@ abstract class Message
     {
         $message['msgtype'] = $this->msgType;
         $message[$this->msgType] = $this->getBody();
+
         return $message;
     }
-
 }

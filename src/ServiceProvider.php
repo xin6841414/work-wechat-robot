@@ -17,7 +17,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function boot()
     {
-        $this->publishes([
+        $this->publishes(
+            [
                 dirname(__DIR__).'/config/workwechatrobot.php' => config_path('workwechatrobot.php'), ]
         );
     }

@@ -3,17 +3,15 @@
  * Created by PhpStorm.
  * User: xin6841414
  * Date: 10-19 019
- * Time: 17:10
+ * Time: 17:10.
  */
 
 namespace Xin6841414\WorkWechatRobot\Messages;
-
 
 use Xin6841414\WorkWechatRobot\Exceptions\InvalidArgumentException;
 
 class Markdown extends Message
 {
-
     protected $msgType = 'markdown';
     protected $content;
     protected $canContentAt = true;
@@ -24,7 +22,7 @@ class Markdown extends Message
         $this->configNotify($config);
     }
 
-    function getMessageType()
+    public function getMessageType()
     {
         return $this->msgType = 'markdown';
     }
@@ -36,7 +34,7 @@ class Markdown extends Message
 
     public function sendAt($type, $list = [], $atAll = false)
     {
-       return $this;
+        return $this;
     }
 
     /**
@@ -47,28 +45,35 @@ class Markdown extends Message
         $tmp['content'] = $this->content;
         $tmp['mentioned_list'] = $this->mentionedList;
         $tmp['mentioned_mobile_list'] = $this->mentionedMobileList;
+
         return array_filter($tmp);
     }
 
     /**
-     * 转标题
+     * 转标题.
+     *
      * @param string $content 内容
-     * @param int $level 支持1-6级标题
-     * @return string
+     * @param int    $level   支持1-6级标题
+     *
      * @throws InvalidArgumentException
+     *
+     * @return string
      */
     public function setTitleContent($content, $level = 1)
     {
-        if(!in_array($level,[1,2,3,4,5,6])){
+        if (!in_array($level, [1, 2, 3, 4, 5, 6])) {
             throw new InvalidArgumentException('标题支持1-6级标题');
         }
         $content = ltrim($content);
-        return str_pad(' '.$content, $level+1+strlen($content), '#', STR_PAD_LEFT);
+
+        return str_pad(' '.$content, $level + 1 + strlen($content), '#', STR_PAD_LEFT);
     }
 
     /**
-     * 内容加粗
+     * 内容加粗.
+     *
      * @param string $content
+     *
      * @return string
      */
     public function setBoldContent($content)
@@ -77,7 +82,8 @@ class Markdown extends Message
     }
 
     /**
-     * 添加换行符
+     * 添加换行符.
+     *
      * @return string
      */
     public function addWrap()
@@ -86,9 +92,11 @@ class Markdown extends Message
     }
 
     /**
-     * 转链接
+     * 转链接.
+     *
      * @param $content
      * @param $url
+     *
      * @return string
      */
     public function setUrlContent($content, $url)
@@ -97,19 +105,24 @@ class Markdown extends Message
     }
 
     /**
-     * 转代码段， 不支持跨行
+     * 转代码段， 不支持跨行.
+     *
      * @param $content
+     *
      * @return string
      */
     public function setOneLineCodeContent($content)
     {
         $content = str_replace('\n', '', $content);
+
         return '`'.$content.'`';
     }
 
     /**
-     * 转引用
+     * 转引用.
+     *
      * @param $content
+     *
      * @return string
      */
     public function setQuoteContent($content)
@@ -118,22 +131,26 @@ class Markdown extends Message
     }
 
     /**
-     * 设置字体颜色
+     * 设置字体颜色.
+     *
      * @param string $content 内容
-     * @param int $color 颜色， 仅支持绿(1),灰(2),橙红(3)
-     * @return string
+     * @param int    $color   颜色， 仅支持绿(1),灰(2),橙红(3)
+     *
      * @throws InvalidArgumentException
+     *
+     * @return string
      */
     public function setTextColor($content, $color = 1)
     {
-        if (!in_array($color, [1,2,3])){
+        if (!in_array($color, [1, 2, 3])) {
             throw new InvalidArgumentException('字体颜色仅支持绿(1),灰(2),橙红(3)');
         }
         $colors = [
             1 => 'info',
             2 => 'comment',
-            3 => 'warning'
+            3 => 'warning',
         ];
+
         return '<font color="'.$colors[$color].'">'.$content.'</font>';
     }
 }

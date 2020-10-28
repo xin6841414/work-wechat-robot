@@ -1,24 +1,17 @@
 <?php
+
 namespace Xin6841414\WorkWechatRobot\Tests;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
+
 use PHPUnit\Framework\TestCase;
 use Xin6841414\WorkWechatRobot\Exceptions\InvalidArgumentException;
-use Xin6841414\WorkWechatRobot\HttpClient;
-use Xin6841414\WorkWechatRobot\Messages\File;
-use Xin6841414\WorkWechatRobot\Messages\Image;
-use Xin6841414\WorkWechatRobot\Messages\Markdown;
-use Xin6841414\WorkWechatRobot\Messages\News;
-use Xin6841414\WorkWechatRobot\Messages\Text;
 use Xin6841414\WorkWechatRobot\Robot;
 
 /**
  * Created by PhpStorm.
  * User: xin6841414
  * Date: 10-27 027
- * Time: 9:59
+ * Time: 9:59.
  */
-
 class RobotTest extends TestCase
 {
     protected $robot;
@@ -26,22 +19,22 @@ class RobotTest extends TestCase
 
     public function setUp()
     {
-       $config = [
-           'default' => [
-               'enabled' => true,
-               'key' => 'mock_key',
-               'notify_user_ids' => '',
-               'notify_mobiles' => ''
-           ],
-           'noKey' => [
-               'enabled' => true,
-               'key' => '',
-               'notify_user_ids' => '',
-               'notify_mobiles' => ''
-           ]
+        $config = [
+            'default' => [
+                'enabled'         => true,
+                'key'             => 'mock_key',
+                'notify_user_ids' => '',
+                'notify_mobiles'  => '',
+            ],
+            'noKey' => [
+                'enabled'         => true,
+                'key'             => '',
+                'notify_user_ids' => '',
+                'notify_mobiles'  => '',
+            ],
        ];
-       $this->config = $config;
-       $this->robot = new Robot($config);
+        $this->config = $config;
+        $this->robot = new Robot($config);
     }
 
     public function testWith()
@@ -51,7 +44,6 @@ class RobotTest extends TestCase
 
     public function testWithWithInvalidRobot()
     {
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('未知的robot配置名称【foo】');
         $this->robot->with('foo');
@@ -60,13 +52,11 @@ class RobotTest extends TestCase
 
     public function testWithWithInvalidKey()
     {
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('【noKey】机器人的key不能为空');
         $this->robot->with('noKey');
         $this->fail('Failed to assert with throw exception with invalid argument.');
     }
-
 
     public function testSetMessageWithInvalidMessage()
     {
@@ -78,11 +68,11 @@ class RobotTest extends TestCase
 
     public function testGetMessage()
     {
-        $this->assertInstanceOf('Xin6841414\\WorkWechatRobot\\Messages\\Text',  $this->robot->with('default')->setMessage('text')->getMessage());
-        $this->assertInstanceOf('Xin6841414\\WorkWechatRobot\\Messages\\Markdown',  $this->robot->with('default')->setMessage('markdown')->getMessage());
-        $this->assertInstanceOf('Xin6841414\\WorkWechatRobot\\Messages\\Image',  $this->robot->with('default')->setMessage('image')->getMessage());
-        $this->assertInstanceOf('Xin6841414\\WorkWechatRobot\\Messages\\News',  $this->robot->with('default')->setMessage('news')->getMessage());
-        $this->assertInstanceOf('Xin6841414\\WorkWechatRobot\\Messages\\File',  $this->robot->with('default')->setMessage('file')->getMessage());
+        $this->assertInstanceOf('Xin6841414\\WorkWechatRobot\\Messages\\Text', $this->robot->with('default')->setMessage('text')->getMessage());
+        $this->assertInstanceOf('Xin6841414\\WorkWechatRobot\\Messages\\Markdown', $this->robot->with('default')->setMessage('markdown')->getMessage());
+        $this->assertInstanceOf('Xin6841414\\WorkWechatRobot\\Messages\\Image', $this->robot->with('default')->setMessage('image')->getMessage());
+        $this->assertInstanceOf('Xin6841414\\WorkWechatRobot\\Messages\\News', $this->robot->with('default')->setMessage('news')->getMessage());
+        $this->assertInstanceOf('Xin6841414\\WorkWechatRobot\\Messages\\File', $this->robot->with('default')->setMessage('file')->getMessage());
     }
 
     public function testContentAt()
@@ -96,9 +86,8 @@ class RobotTest extends TestCase
         $message = $this->robot->text('hello word!')->getMessage();
         $r = \Mockery::mock($this->robot)->makePartial();
         $r->allows([
-            'send' => ['errcode' => 0, 'errmsg' => 'ok']
+            'send' => ['errcode' => 0, 'errmsg' => 'ok'],
         ]);
         $this->assertSame(['errcode' => 0, 'errmsg' => 'ok'], $r->send($message));
-
     }
 }
