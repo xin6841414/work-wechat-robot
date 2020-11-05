@@ -1,4 +1,4 @@
-<h1 align="center"> 企业微信群机器人 </h1>
+<h1 align="center"> 企业微信群机器人_Laravel </h1>
 
 <p align="center"> 企业微信群机器人通知的 laravel扩展</p>
 
@@ -94,18 +94,26 @@ $response = $robot->text('测试消息');
 ```php
     $markdown = $robot->setMessage('markdown')->getMessage();
 ```
-### 2.2 拼接消息内容
+### 2.2 消息内容
+#### 2.2.1 无格式的直接调用
+```php
+    $robot->markdown('我是内容')->send();
+```
+#### 2.2.2 内容的特殊格式
+```php
     $title = $markdown->setTitleContent('这是标题', 2)
     //参数2表示标题级别，支持1-6，默认1
     $bold = $markdown->setBoldContent('此处加粗');
-    $warp = $markdown->addWarp(); //换行符 \n
+    $wrap = $markdown->addWrap(); //换行符 \n
     $url = $markdown->setUrlContent('百度', 'https://baidu.com'); //超链接
     $code = $markdown->setOneLineCodeContent('我是一行代码'); //仅支持单行代码，不支持跨行代码段
     $quote = $markdown->setQuoteContent('这是引用文字'); //转引用
     $color = $mardown->setTextColor('我是绿色的字', 1); //这是字体颜色，仅支持仅支持绿(1),灰(2),橙红(3)
+```
 ### 2.3 发送消息
 ```php
-    $result = $robot->markdown($title.$warp.$bold.$warp.$url)->send();
+    //内容可随意拼接,不同格式间需要用换行符隔离，防止格式粘连
+    $result = $robot->markdown($title.$wrap.'我只是一行内容'.$wrap.$bold.$wrap.$url)->send();
 ```
 ### 2.4 markdown支持contentAt语法，不支持手机号
 ```php
@@ -181,6 +189,9 @@ $response = $robot->text('测试消息');
     
 -  要求文件大小在5B~20M之间
 
+
+### 6 参考文档
+[企业微信群机器人配置说明](https://work.weixin.qq.com/api/doc/90000/90136/91770)
 
 You can contribute in one of three ways:
 
